@@ -71,11 +71,11 @@
 
                         <div class="mt-8 flex flex-wrap gap-6">
                             <div class="text-center">
-                                <span class="block text-2xl font-bold">0</span>
+                                <span class="block text-2xl font-bold">{{$user->posts->count()}}</span>
                                 <span class="text-indigo-200">Publications</span>
                             </div>
                             <div class="text-center">
-                                <span class="block text-2xl font-bold">0</span>
+                                <span class="block text-2xl font-bold">{{$user->friends->count()}}</span>
                                 <span class="text-indigo-200">Amis</span>
                             </div>
                             <div class="text-center">

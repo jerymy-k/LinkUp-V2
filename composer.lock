@@ -6192,7 +6192,6 @@
             "time": "2025-04-30T06:54:44+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "laravel/breeze",
             "version": "v2.3.8",
             "source": {
@@ -6254,8 +6253,6 @@
             "time": "2025-07-18T18:49:59+00:00"
         },
         {
-=======
->>>>>>> 184055b2ec51c07cf8e097f1da05b713847d9c89
             "name": "laravel/pail",
             "version": "v1.2.4",
             "source": {
@@ -7161,7 +7158,6 @@
         },
         {
             "name": "phpunit/phpunit",
-<<<<<<< HEAD
             "version": "11.5.49",
             "source": {
                 "type": "git",
@@ -7172,18 +7168,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4f1750675ba411dd6c2d5fa8a3cca07f6742020e",
                 "reference": "4f1750675ba411dd6c2d5fa8a3cca07f6742020e",
-=======
-            "version": "11.5.50",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "fdfc727f0fcacfeb8fcb30c7e5da173125b58be3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fdfc727f0fcacfeb8fcb30c7e5da173125b58be3",
-                "reference": "fdfc727f0fcacfeb8fcb30c7e5da173125b58be3",
->>>>>>> 184055b2ec51c07cf8e097f1da05b713847d9c89
                 "shasum": ""
             },
             "require": {
@@ -7255,11 +7239,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-<<<<<<< HEAD
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.49"
-=======
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.50"
->>>>>>> 184055b2ec51c07cf8e097f1da05b713847d9c89
             },
             "funding": [
                 {
@@ -7283,11 +7263,7 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
             "time": "2026-01-24T16:09:28+00:00"
-=======
-            "time": "2026-01-27T05:59:18+00:00"
->>>>>>> 184055b2ec51c07cf8e097f1da05b713847d9c89
         },
         {
             "name": "sebastian/cli-parser",

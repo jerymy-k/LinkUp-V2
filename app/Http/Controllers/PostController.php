@@ -21,7 +21,7 @@ class PostController extends Controller
     {
         $data = $request->validate([
             'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'video' => 'nullable|mimetypes:video/mp4,video/webm|max:10240',
         ]);
 
@@ -72,7 +72,7 @@ class PostController extends Controller
 
            $post->update($data);
 
-           return redirect()->route('profile.show');
+           return redirect()->route('profile.show',auth()->id());
         }
 
         public function destroy(Post $post)
