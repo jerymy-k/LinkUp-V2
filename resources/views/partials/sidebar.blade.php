@@ -16,6 +16,10 @@
                                 class="sidebar-link block px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-indigo-600 transition-colors">
                                 <i class="fas fa-users mr-3"></i> Amis
                             </a>
+                            <a href="{{ route('conversations.show', auth()->user()->id) }}"
+                                class="sidebar-link block px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-indigo-600 transition-colors">
+                                <i class="fas fa-message mr-3"></i> Conversations
+                            </a>
                             <a href="/search"
                                 class="sidebar-link block px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-indigo-600 transition-colors">
                                 <i class="fas fa-search mr-3"></i> Rechercher
