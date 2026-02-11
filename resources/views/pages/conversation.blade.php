@@ -28,10 +28,6 @@
                         </div>
                         <h3 class="text-lg font-medium text-gray-900 mb-2">Aucune conversation</h3>
                         <p class="text-gray-500 text-sm mb-4">Commencez une nouvelle conversation avec un ami !</p>
-                        <button
-                                class="cursor-pointer px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700">
-                            <i class="fas fa-plus mr-2"></i> Nouvelle conversation
-                        </button>
                     </div>
                 @else
                     <div class="divide-y divide-gray-200">
@@ -312,11 +308,6 @@
                     <p class="text-gray-500 text-center mb-8 max-w-md">
                         Sélectionnez une conversation dans la liste ou commencez une nouvelle discussion avec un ami.
                     </p>
-                    <button
-                            class="cursor-pointer px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 flex items-center space-x-2">
-                        <i class="fas fa-plus-circle"></i>
-                        <span>Nouvelle conversation</span>
-                    </button>
                 </div>
             @endif
         </div>
@@ -330,7 +321,7 @@
             <h3 class="text-lg font-semibold text-gray-900">
                 Nouvelle conversation
             </h3>
-            <button onclick="closeNewConversationModal()" class="text-gray-400 hover:text-gray-600">
+            <button  class="text-gray-400 hover:text-gray-600">
                 <i class="fas fa-times"></i>
             </button>
         </div>
