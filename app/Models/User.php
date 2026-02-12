@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use App\Models\FriendRequest;
 use App\Models\Post;
+use App\Models\Conversation;
 use App\Models\Like;
 
 class User extends Authenticatable
@@ -75,6 +76,11 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class);
     }
 
     public function isFriendWith(int $userId){
