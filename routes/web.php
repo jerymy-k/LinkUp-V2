@@ -22,6 +22,9 @@ Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'
 
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
 
+Route::get('/profile/edit', function () {
+    return view('pages.updating-profile');
+})->middleware('auth')->name('profile.edit');
 Route::get('/profile/{user}/', [ProfileController::class, 'show'])->middleware('auth')->name('profile.show');
 
 
@@ -29,9 +32,7 @@ Route::get('/search', function () {
     return view('pages.search');
 })->middleware('auth')->name('users.search');
 
-Route::get('/profile/edit', function () {
-    return view('pages.updating-profile');
-})->middleware('auth')->name('profile.edit');
+
 
 Route::get('/password', function () {
     return view('auth.password-reset');
