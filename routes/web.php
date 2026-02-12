@@ -8,12 +8,14 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\SocialAuthController;
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/home',[HomeController::class,'index'])->middleware('auth')->name('home');
+Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])
+    ->name('social.redirect');
 
 Route::get('/profile/edit', function () {
     return view('pages.updating-profile');
@@ -31,7 +33,7 @@ Route::get('/password', function () {
     return view('auth.password-reset');
 });
 
-Route::get('/password/change' , function(){
+Route::get('/password/change', function () {
     return view('auth.change-password');
 })->middleware('auth');
 
@@ -44,10 +46,10 @@ Route::delete('/friend/{friendRequest}/reject', [FriendController::class, 'rejec
 Route::delete('/friend/{friendRequest}/cancel', [FriendController::class, 'cancel'])->middleware('auth')->name('friends.cancel');
 Route::delete('/friend/{user}/remove', [FriendController::class, 'remove'])->middleware('auth')->name('friends.remove');
 
-Route::post('/post/store',[PostController::class, 'store'])->middleware('auth')->name('post.store');
-Route::delete('/post/{post}/delete}',[PostController::class, 'destroy'])->middleware('auth')->name('post.destroy');
-Route::get('/post/{post}/edit}',[PostController::class, 'edit'])->middleware('auth')->name('post.edit');
-Route::put('/post/{post}/update}',[PostController::class, 'update'])->middleware('auth')->name('post.update');
+Route::post('/post/store', [PostController::class, 'store'])->middleware('auth')->name('post.store');
+Route::delete('/post/{post}/delete}', [PostController::class, 'destroy'])->middleware('auth')->name('post.destroy');
+Route::get('/post/{post}/edit}', [PostController::class, 'edit'])->middleware('auth')->name('post.edit');
+Route::put('/post/{post}/update}', [PostController::class, 'update'])->middleware('auth')->name('post.update');
 
 Route::post('/posts/{post}/like', [LikeController::class, 'store'])->name('posts.like');
 Route::delete('/posts/{post}/like', [LikeController::class, 'destroy'])->name('posts.unlike');
@@ -56,4 +58,4 @@ Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name
 Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
