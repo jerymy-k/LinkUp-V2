@@ -17,21 +17,16 @@ Route::get('/', function () {
 Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])
     ->name('social.redirect');
 
-Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'])
-    ->name('social.callback');
-
-Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
-
 Route::get('/profile/edit', function () {
     return view('pages.updating-profile');
 })->middleware('auth')->name('profile.edit');
+
 Route::get('/profile/{user}/', [ProfileController::class, 'show'])->middleware('auth')->name('profile.show');
 
 
 Route::get('/search', function () {
     return view('pages.search');
 })->middleware('auth')->name('users.search');
-
 
 
 Route::get('/password', function () {

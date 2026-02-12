@@ -20,7 +20,7 @@
                                 class="sidebar-link block px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-indigo-600 transition-colors">
                                 <i class="fas fa-search mr-3"></i> Rechercher
                             </a>
-                            <a href="/profile/edit"
+                            <a href="{{ route('profile.edit') }}"
                                 class="sidebar-link block px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-indigo-600 transition-colors">
                                 <i class="fas fa-edit mr-3"></i> Modifier profil
                             </a>
