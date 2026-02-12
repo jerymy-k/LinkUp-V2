@@ -24,6 +24,7 @@
                         </a>
                     </p>
                 </div>
+
                 @if ($errors->any())
                     <div class="mb-4 rounded-lg bg-red-100 p-3 text-red-700 text-sm">
                         <ul class="list-disc list-inside">
@@ -33,8 +34,10 @@
                         </ul>
                     </div>
                 @endif
-                <form method="post" action="/register" class="mt-8 space-y-6">
+
+                <form method="post" action="{{ route('register') }}" class="mt-8 space-y-6">
                     @csrf
+
                     <div class="rounded-md shadow-sm space-y-4">
                         <div class="grid grid-cols-2 gap-4">
                             <div>
@@ -66,7 +69,8 @@
                             <label for="register-email" class="block text-sm font-medium text-gray-700 mb-1">Adresse
                                 email</label>
                             <input id="register-email" name="email" type="email" required
-                                class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500
+                                text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="vous@exemple.com">
                         </div>
 
@@ -82,7 +86,6 @@
                                     <i class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
                                 </button>
                             </div>
-
                         </div>
 
                         <div>
@@ -101,7 +104,8 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="space-y-4">
+                        <!-- Register button -->
                         <button type="submit"
                             class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
                             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
@@ -109,6 +113,30 @@
                             </span>
                             Créer mon compte
                         </button>
+
+                        <!-- Divider -->
+                        <div class="relative">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-200"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-2 bg-white text-gray-500">Ou s’inscrire avec</span>
+                            </div>
+                        </div>
+
+                        <!-- Google -->
+                        <a href="{{ route('social.redirect', 'google') }}"
+                            class="w-full inline-flex justify-center items-center gap-2 py-3 px-4 border border-gray-300 rounded-lg bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                            <i class="fab fa-google text-red-500"></i>
+                            Google
+                        </a>
+
+                        <!-- Facebook -->
+                        <a href="{{ route('social.redirect', 'facebook') }}"
+                            class="w-full inline-flex justify-center items-center gap-2 py-3 px-4 border border-gray-300 rounded-lg bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                            <i class="fab fa-facebook text-blue-600"></i>
+                            Facebook
+                        </a>
                     </div>
                 </form>
             </div>

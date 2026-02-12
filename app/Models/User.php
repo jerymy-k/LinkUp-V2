@@ -22,12 +22,13 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
         'username',
         'email',
         'password',
-        'profile_photo',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -77,26 +78,32 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function isFriendWith(int $userId){
-        return $this->friends()->where('friend_id',$userId)->exists();
+    public function isFriendWith(int $userId)
+    {
+        return $this->friends()->where('friend_id', $userId)->exists();
     }
 
-    public function hasPendingRequestTo(int $userId){
+    public function hasPendingRequestTo(int $userId)
+    {
         return FriendRequest::where('sender_id', $this->id)
             ->where('reciever_id', $userId)
             ->where('stat', 'pending')
             ->exists();
     }
 
-    public function sendFriendRequestTo(int $userId): void{
-        if ($this->id === $userId) return;
+    public function sendFriendRequestTo(int $userId): void
+    {
+        if ($this->id === $userId)
+            return;
         FriendRequest::firstOrCreate(['sender_id' => $this->id, 'reciever_id' => $userId,], ['stat' => 'pending']);
     }
 
-    public function removeFriend(int $userId): void{
+    public function removeFriend(int $userId): void
+    {
         Friendship::where(function ($q) use ($userId) {
             $q->where('user_id', $this->id)
-            ->where('friend_id', $userId);})->delete();
+                ->where('friend_id', $userId);
+        })->delete();
     }
 
     public function friends()
