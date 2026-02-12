@@ -43,11 +43,14 @@ Route::patch('/friend/{friendRequest}/accept', [FriendController::class, 'accept
 Route::delete('/friend/{friendRequest}/reject', [FriendController::class, 'reject'])->middleware('auth')->name('friends.reject');
 Route::delete('/friend/{friendRequest}/cancel', [FriendController::class, 'cancel'])->middleware('auth')->name('friends.cancel');
 Route::delete('/friend/{user}/remove', [FriendController::class, 'remove'])->middleware('auth')->name('friends.remove');
+Route::post('/friend/generate-link', [FriendController::class, 'generateLink'])->name('friends.generateLink');
+Route::post('/friend/generate-qr', [FriendController::class, 'generateQr'])->name('friends.generateQr');
+Route::get('/friend/accept/{token}', [FriendController::class, 'acceptByToken'])->name('friends.acceptByToken');
 
 Route::post('/post/store',[PostController::class, 'store'])->middleware('auth')->name('post.store');
-Route::delete('/post/{post}/delete}',[PostController::class, 'destroy'])->middleware('auth')->name('post.destroy');
-Route::get('/post/{post}/edit}',[PostController::class, 'edit'])->middleware('auth')->name('post.edit');
-Route::put('/post/{post}/update}',[PostController::class, 'update'])->middleware('auth')->name('post.update');
+Route::delete('/post/{post}/delete',[PostController::class, 'destroy'])->middleware('auth')->name('post.destroy');
+Route::get('/post/{post}/edit',[PostController::class, 'edit'])->middleware('auth')->name('post.edit');
+Route::put('/post/{post}/update',[PostController::class, 'update'])->middleware('auth')->name('post.update');
 
 Route::post('/posts/{post}/like', [LikeController::class, 'store'])->name('posts.like');
 Route::delete('/posts/{post}/like', [LikeController::class, 'destroy'])->name('posts.unlike');

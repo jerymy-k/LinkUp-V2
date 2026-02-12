@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('friend_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sender_id')->constraint('users')->ondelete('cascade');
-            $table->foreignId('reciever_id')->constraint('users')->ondelete('cascade');
-            $table->enum('stat',['pending','accepted','refused'])->default('pending');
+            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('reciever_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->enum('stat', ['pending', 'accepted', 'refused', 'cancelled'])->default('pending');
+            $table->uuid('token')->nullable()->unique();
+            $table->timestamp('expires_at')->nullable();
+            $table->boolean('auto_accepted')->default(false);
+            $table->timestamp('accepted_at')->nullable();
             $table->timestamps();
         });
     }

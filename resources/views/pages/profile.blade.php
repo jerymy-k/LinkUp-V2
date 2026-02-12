@@ -10,22 +10,58 @@
         <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-t-2xl shadow-lg">
             <div class="container mx-auto px-6 py-12">
                 <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
-                    <div class="relative">
-                        @if ($user->profile_photo)
-                            <img src="{{ Storage::url($user->profile_photo) }}" alt="{{ $user->name }}"
-                                class="h-40 w-40 rounded-full border-4 border-white shadow-xl object-cover">
-                        @else
-                            <div
-                                class="h-40 w-40 rounded-full border-4 border-white shadow-xl bg-white flex items-center justify-center">
-                                <i class="fas fa-user text-indigo-400 text-7xl"></i>
-                            </div>
-                        @endif
-
+                    <div class="relative flex flex-col items-center">
+                        <div class="relative group">
+                            @if ($user->profile_photo)
+                                <img src="{{ Storage::url($user->profile_photo) }}" alt="{{ $user->name }}" class="h-44 w-44 rounded-full object-cover border-4 border-white shadow-2xl transition duration-300 group-hover:scale-105">
+                            @else
+                                <div class="h-44 w-44 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-2xl">
+                                    <i class="fas fa-user text-7xl"></i>
+                                </div>
+                            @endif
+                            @if (auth()->check() && auth()->id() === $user->id)
+                                <a href="{{ route('profile.edit') }}"
+                                    class="absolute bottom-2 right-2 h-11 w-11 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg hover:bg-indigo-700 hover:scale-110 transition duration-300">
+                                    <i class="fas fa-pen text-sm"></i>
+                                </a>
+                            @endif
+                        </div>
                         @if (auth()->check() && auth()->id() === $user->id)
-                            <a href="{{ route('profile.edit') }}"
-                                class="absolute bottom-0 right-0 h-10 w-10 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-                                <i class="fas fa-edit"></i>
-                            </a>
+                            <div class="mt-6 flex flex-wrap justify-center gap-4">
+                                <form method="POST" action="{{ route('friends.generateLink') }}">
+                                    @csrf
+                                    <button type="submit" class="px-5 py-2.5 bg-white/70 backdrop-blur-md border border-indigo-200 text-indigo-600 rounded-full font-semibold shadow-md hover:bg-indigo-600 hover:text-white hover:shadow-lg transition duration-300 flex items-center gap-2">
+                                        <i class="fas fa-link"></i>
+                                        Générer lien
+                                    </button>
+                                </form>
+
+                                <form method="POST" action="{{ route('friends.generateQr') }}">
+                                    @csrf
+                                    <button type="submit" class="px-5 py-2.5 bg-white/70 backdrop-blur-md border border-purple-200 text-purple-600 rounded-full font-semibold shadow-md hover:bg-purple-600 hover:text-white hover:shadow-lg transition duration-300 flex items-center gap-2">
+                                        <i class="fas fa-qrcode"></i>
+                                        Générer QR
+                                    </button>
+                                </form>
+                            </div>
+                            @if(session('invite_link'))
+                                <div class="mt-6 bg-white/80 backdrop-blur-md p-4 rounded-xl shadow-md w-full max-w-md mx-auto text-center">
+                                    <p class="font-semibold text-gray-700">Lien d’invitation :</p>
+                                    <input type="text"
+                                        value="{{ session('invite_link') }}"
+                                        class="w-full mt-3 p-2 border rounded-lg text-sm text-gray-600"
+                                        readonly onclick="this.select()">
+                                    <p class="text-xs text-gray-500 mt-2">Valable 1 heure</p>
+                                </div>
+                            @endif
+                            @if(session('qr_code'))
+                                <div class="mt-6 flex justify-center">
+                                    <div class="bg-white p-4 rounded-xl shadow-md">
+                                        {!! session('qr_code') !!}
+                                        <p class="text-xs text-center text-gray-500 mt-2">Valable 1 heure</p>
+                                    </div>
+                                </div>
+                            @endif
                         @endif
                     </div>
 
