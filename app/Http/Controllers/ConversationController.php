@@ -18,8 +18,16 @@ class ConversationController extends Controller
 
     public function store(Request $request):RedirectResponse
     {
+        $conversation = Conversation::where('user_id', auth()->user()->id)
+                                     ->where('friend_id', $request->friend)
+                                     ->first();
+        
+        if ($conversation) {
+        return redirect()->route('conversations.show');
+        }
+
         Conversation::create([
-            'user_id' => $request->user,
+            'user_id' => auth()->user()->id,
             'friend_id' => $request->friend
         ]);
         
