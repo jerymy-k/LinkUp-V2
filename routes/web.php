@@ -8,6 +8,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -57,3 +58,17 @@ Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('c
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 require __DIR__.'/auth.php';
+
+
+use App\Events\TestMessage;
+
+Route::get('/test-broadcast', function () {
+    event(new TestMessage('Hello from Laravel!'));
+    return 'Event sent!';
+});
+use App\Events\ChatMessage;
+
+Route::get('/send-chat/{msg}', function($msg){
+    event(new ChatMessage(auth()->getUser()->user ?? 'TestUser', $msg));
+    return 'Message sent!: ' . $msg;
+});

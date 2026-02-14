@@ -1,4 +1,5 @@
-import Echo from 'laravel-echo';
+ import Echo from 'laravel-echo';
+
 import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
@@ -11,15 +12,3 @@ window.Echo = new Echo({
     forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? 'https') === 'https',
     enabledTransports: ['ws', 'wss'],
 });
-
-// Listen for test event
-window.Echo.channel('test-channel')
-    .listen('App\\Events\\TestMessage', (e) => {
-        console.log('TestMessage received:', e.message);
-    });
-
-// Listen for chat event
-window.Echo.channel('chat')
-    .listen('ChatMessage', (e) => {
-        console.log(`[${e.user}] says: ${e.message}`);
-    });
