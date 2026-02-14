@@ -14,17 +14,17 @@ class Conversation extends Model
         'friend_id'
     ];
 
-    public function user() : BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function friend() : BelongsTo
+    public function friend()
     {
         return $this->belongsTo(User::class,'friend_id');
     }
 
-    public function messages(): HasMany
+    public function messages()
     {
         return $this->hasMany(Message::class);
     }
