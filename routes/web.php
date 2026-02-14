@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +58,12 @@ Route::delete('/posts/{post}/like', [LikeController::class, 'destroy'])->name('p
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+Route::get('/conversations',[ConversationController::class,'index'])->middleware('auth')->name('conversations.show');
+Route::post('/conversations',[ConversationController::class,'store'])->middleware('auth')->name('conversations.store');
+
+Route::Post('/message/{conversation}',[MessageController::class ,'store'])->middleware('auth')->name('messages.store');
+Route::delete('/message/{conversation}',[MessageController::class,'destroy'])->middleware('auth')->name('messages.destroy');
 
 require __DIR__.'/auth.php';
 
