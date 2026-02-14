@@ -10,6 +10,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -65,3 +66,17 @@ Route::Post('/message/{conversation}',[MessageController::class ,'store'])->midd
 Route::delete('/message/{conversation}',[MessageController::class,'destroy'])->middleware('auth')->name('messages.destroy');
 
 require __DIR__.'/auth.php';
+
+
+use App\Events\TestMessage;
+
+Route::get('/test-broadcast', function () {
+    event(new TestMessage('Hello from Laravel!'));
+    return 'Event sent!';
+});
+use App\Events\ChatMessage;
+
+Route::get('/send-chat/{msg}', function($msg){
+    event(new ChatMessage(auth()->getUser()->user ?? 'TestUser', $msg));
+    return 'Message sent!: ' . $msg;
+});
