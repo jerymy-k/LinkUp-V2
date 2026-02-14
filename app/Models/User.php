@@ -27,6 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_photo',
+        'is_online',
     ];
 
     /**
@@ -109,6 +110,10 @@ class User extends Authenticatable
         Friendship::where(function ($q) use ($userId) {
             $q->where('user_id', $userId)
             ->where('friend_id', $this->id);})->delete();
+    }
+
+    public function online(): bool{
+        return $this->is_online;
     }
 
     public function friends()

@@ -36,6 +36,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        if ($request->user()) {
+            $request->user()->update(['is_online' => false]);
+        }
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
