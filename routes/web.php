@@ -5,10 +5,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\SetUserOnline;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -68,4 +70,24 @@ Route::get('/password/change', function () {
     return view('auth.change-password');
 });
 
+Route::get('/conversations',[ConversationController::class,'index'])->middleware('auth')->name('conversations.show');
+Route::post('/conversations',[ConversationController::class,'store'])->middleware('auth')->name('conversations.store');
+
+Route::Post('/message/{conversation}',[MessageController::class ,'store'])->middleware('auth')->name('messages.store');
+Route::delete('/message/{conversation}',[MessageController::class,'destroy'])->middleware('auth')->name('messages.destroy');
+
 require __DIR__.'/auth.php';
+
+
+use App\Events\TestMessage;
+
+Route::get('/test-broadcast', function () {
+    event(new TestMessage('Hello from Laravel!'));
+    return 'Event sent!';
+});
+use App\Events\ChatMessage;
+
+Route::get('/send-chat/{msg}', function($msg){
+    event(new ChatMessage(auth()->getUser()->user ?? 'TestUser', $msg));
+    return 'Message sent!: ' . $msg;
+});
