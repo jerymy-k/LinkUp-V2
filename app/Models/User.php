@@ -28,6 +28,7 @@ class User extends Authenticatable
         'email',
         'password',
         'profile_photo',
+        'is_online',
     ];
 
     /**
@@ -87,6 +88,13 @@ class User extends Authenticatable
         return $this->friends()->where('friend_id',$userId)->exists();
     }
 
+    public function hasPendingRequestFrom(int $userId): bool{
+        return FriendRequest::where('sender_id', $userId)
+            ->where('reciever_id', $this->id)
+            ->where('stat', 'pending')
+            ->exists();
+    }
+
     public function hasPendingRequestTo(int $userId){
         return FriendRequest::where('sender_id', $this->id)
             ->where('reciever_id', $userId)
@@ -96,13 +104,22 @@ class User extends Authenticatable
 
     public function sendFriendRequestTo(int $userId): void{
         if ($this->id === $userId) return;
-        FriendRequest::firstOrCreate(['sender_id' => $this->id, 'reciever_id' => $userId,], ['stat' => 'pending']);
+        if (!$this->hasPendingRequestTo($userId) && !$this->isFriendWith($userId)) {
+            FriendRequest::firstOrCreate(['sender_id' => $this->id, 'reciever_id' => $userId,], ['stat' => 'pending', 'auto_accepted' => false]);
+        }
     }
 
     public function removeFriend(int $userId): void{
         Friendship::where(function ($q) use ($userId) {
             $q->where('user_id', $this->id)
             ->where('friend_id', $userId);})->delete();
+        Friendship::where(function ($q) use ($userId) {
+            $q->where('user_id', $userId)
+            ->where('friend_id', $this->id);})->delete();
+    }
+
+    public function online(): bool{
+        return $this->is_online;
     }
 
     public function friends()

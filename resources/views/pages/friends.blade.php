@@ -196,6 +196,9 @@
 
                                             <div>
                                                 <h3 class="font-medium text-gray-900 text-sm">{{ $friend->name }}</h3>
+                                                <span class="text-xs font-medium {{ $friend->is_online ? 'text-green-600' : 'text-gray-400' }}">
+                                                    {{ $friend->is_online ? 'Online' : 'Offline' }}
+                                                </span>
                                                 <p class="text-xs text-gray-500">{{ '@ ' . $friend->username }}</p>
                                             </div>
                                         </div>

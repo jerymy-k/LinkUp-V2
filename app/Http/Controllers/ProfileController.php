@@ -18,7 +18,7 @@ class ProfileController extends Controller
     public function show(User $user): View
     {
         $posts = $user->posts()->latest()->get();
-        return view('pages.profile',['user' => $user,'posts' => $posts]);
+        return view('pages.profile',['user' => $user,'posts' => $posts, 'is_online' => $user->is_online]);
     }
 
     public function edit(Request $request): View
@@ -62,7 +62,7 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
-
+        $user->update(['is_online' => false]);
         Auth::logout();
 
         $user->delete();
