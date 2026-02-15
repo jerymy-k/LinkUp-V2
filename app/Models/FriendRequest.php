@@ -22,7 +22,8 @@ class FriendRequest extends Model
         if ($this->isExpired()) {
             abort(403, 'Invitation expirée');
         }
-        $this->update(['stat' => 'accepted', 'accepted_at' => now(), 'token' => null, 'expires_at' => null]);
+        // $this->update(['stat' => 'accepted', 'accepted_at' => now(), 'token' => null, 'expires_at' => null]);
+        $this->update(['accepted_at' => now()]);
     }
 
     public function reject(): void{

@@ -14,10 +14,11 @@ class FriendController extends Controller
 {   
     public function show(User $user): View
     {
-        $sentFriendRequests = $user->sentFriendRequests()->where('stat', 'pending')->with('reciever')->get(); 
+        $sentFriendRequests = $user->sentFriendRequests()->where('stat', 'pending')->whereNotNull('reciever_id')->with('reciever')->get(); 
         $receivedFriendRequests = $user->receiveFriendRequests()->where('stat', 'pending')->with('sender')->get();
+        $inviteLinks = $user->sentFriendRequests()->where('stat', 'pending')->whereNull('reciever_id')->get();
         $friends = $user->friends;
-        return view('pages.friends', ['sentRequests' => $sentFriendRequests, 'receivedRequests' => $receivedFriendRequests, 'friends' => $friends]);
+        return view('pages.friends', ['sentRequests' => $sentFriendRequests, 'receivedRequests' => $receivedFriendRequests, 'inviteLinks' => $inviteLinks, 'friends' => $friends]);
     }
 
     public function send(Request $request){
@@ -34,21 +35,21 @@ class FriendController extends Controller
     }
     
     public function accept(FriendRequest $friendRequest){
-        abort_if($friendRequest->reciever_id !== auth()->id(), 403);
+        // abort_if($friendRequest->reciever_id !== auth()->id(), 403);
         if ($friendRequest->isExpired()) {
-            $friendRequest->cancel();
+            // $friendRequest->cancel();
             return back()->with('error', 'Demande expirée');
         }
         DB::transaction(function () use ($friendRequest) {
             $sender = $friendRequest->sender_id;
-            $receiver = $friendRequest->reciever_id;
+            // $receiver = $friendRequest->reciever_id;
             Friendship::firstOrCreate([
                 'user_id' => $sender,
-                'friend_id' => $receiver,
+                'friend_id' => auth()->id(),
             ]);
             
             Friendship::firstOrCreate([
-                'user_id' => $receiver,
+                'user_id' => auth()->id(),
                 'friend_id' => $sender,
             ]);
             
@@ -85,7 +86,7 @@ class FriendController extends Controller
         }
         
         $friendRequest = FriendRequest::where('token', $token)
-            ->where('stat', 'pending')
+            ->where('expires_at', '>', now())
             ->firstOrFail();
             
         if ($friendRequest->isExpired()) {
