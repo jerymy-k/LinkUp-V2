@@ -10,28 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="/assets/css/style.css">
-    <script>
-        let heartbeatInterval;
-        @if(auth()->check())
-        heartbeatInterval = setInterval(() => {
-            fetch('/heartbeat', {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Accept': 'application/json'
-                },
-                credentials: 'same-origin',
-            })
-            .then(res => {
-                if(res.status === 401) {
-                    clearInterval(heartbeatInterval);
-                }
-            })
-            .catch(err => console.log(err));
-        }, 30000); //30s
-        @endif
-    </script>
-
+    @livewireStyles
 </head>
 
 <body class="bg-gray-50 text-gray-900">
@@ -39,6 +18,7 @@
         @yield('content')
     </main>
     @yield('footer')
+    @livewireScripts
 </body>
 
 </html>

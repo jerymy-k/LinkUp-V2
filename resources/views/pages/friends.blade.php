@@ -205,10 +205,20 @@
 
                                         <div class="flex space-x-2">
                                             <a href="{{ route('profile.show', $friend->id) }}"
-                                                class="p-2 text-gray-500 hover:text-indigo-600 rounded-full hover:bg-indigo-50 transition-colors"
+                                                class="p-2 text-gray-500 hover:text-green-600 rounded-full hover:bg-indigo-50 transition-colors"
                                                 title="Voir le profil">
                                                 <i class="fas fa-eye"></i>
                                             </a>
+
+                                            <form method="POST" action="{{ route('conversations.store') }}">
+                                                @csrf
+                                                <input type="hidden" name="friend" value="{{ $friend->id }}">
+                                                <button type="submit"
+                                                    class="cursor-pointer p-2 text-gray-500 hover:text-blue-600 rounded-full hover:bg-red-50 transition-colors"
+                                                    title="Commencer Un Conversation">
+                                                    <i class="fas fa-message"></i>
+                                                </button>
+                                            </form>
 
                                             <form method="POST" action="{{ route('friends.remove', $friend->id) }}">
                                                 @csrf
